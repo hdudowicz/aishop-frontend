@@ -19,7 +19,7 @@ export class ImageGeneratePreviewComponent {
     private messageService: MessageService){}
 
   generateImage(){
-    this.generateImageService.generateImageFromPrompt("pink elephant with wings as ears flying through the night sky").subscribe(res => {
+    this.generateImageService.generateImageFromPrompt(this.prompt).subscribe(res => {
       console.log(res);
       // this.previewImageSrc = res.output[0];
       // this.generatedId = res.id;
