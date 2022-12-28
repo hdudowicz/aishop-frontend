@@ -1,0 +1,45 @@
+<div class="card-container">
+  <span class="p-float-label">
+    <p-image [src]="previewImageSrc" alt="Image" width="500" [preview]="true">
+      <ng-template pTemplate="indicator">
+        <i class="pi pi-eye"></i>
+      </ng-template>
+  </p-image>
+  </span>
+
+</div>
+
+<div class="card-container">
+  <span class="p-float-label">
+    <textarea id="float-input" rows="5" cols="30" pInputTextarea [(ngModel)]="prompt"></textarea>
+    <label for="float-input">Enter Image Prompt</label>
+  </span>
+
+  <a class="card" target="_blank" rel="noopener" (click)="generateImage()">
+    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+    <span>Generate Image</span>
+    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </a>
+
+</div>
+
+<div class="card-container">
+  <input pInputText type="text" [(ngModel)]="optId" placeholder="Prediction ID"/>
+  <p-button label="Check Status" (click)="checkStatus()"></p-button>
+
+</div>
+
+<div class="card-container">
+  <h3>Status</h3>
+
+  <p>{{uploadStatus}}</p>
+</div>
+
+<div class="card-container">
+  <p-timeline [value]="uploadLogs">
+    <ng-template pTemplate="content" let-event>
+      {{event}}
+    </ng-template>
+
+  </p-timeline>
+</div>
