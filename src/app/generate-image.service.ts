@@ -20,7 +20,7 @@ export class GenerateImageService {
   generateImageFromPrompt(prompt: string): Observable<PredictionStatus> {
     var params = new HttpParams()
     params.set("prompt", prompt)
-    return this.http.post<PredictionStatus>(`${this.serverUrl}/generate`, null, { params })
+    return this.http.post<PredictionStatus>(`${this.serverUrl}/generate`, {text: prompt})
   }
 
   getStatus(id: string): Observable<PredictionStatus> {
