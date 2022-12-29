@@ -9,13 +9,13 @@ export interface PredictionStatus {
   started_at: Date;
   completed_at: Date;
   source: string;
-  status: string;
+  status?: string;
   input: {
     prompt?: string;
   }
   output: string[];
   error: any;
-  logs: string;
+  logs?: string;
   metrics: {
     predict_time: string;
   }
