@@ -1,0 +1,8 @@
+<p-dataView [value]="predictions">
+  <ng-template let-pred pTemplate="listItem">
+      <div>
+          {{ pred.id }}
+          <p>Status: {{ pred.status }}</p>
+      </div>
+  </ng-template>
+</p-dataView>

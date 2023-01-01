@@ -1,5 +1,5 @@
 import { PredictionStatus } from 'src/model/prediction-status.model';
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Image } from 'primeng/image';
 import { interval, Subject, switchMap, takeUntil, timer } from 'rxjs';
@@ -10,7 +10,7 @@ import { GenerateImageService } from '../generate-image.service';
   templateUrl: './image-generate-preview.component.html',
   styleUrls: ['./image-generate-preview.component.scss']
 })
-export class ImageGeneratePreviewComponent {
+export class ImageGeneratePreviewComponent implements OnInit {
   @ViewChild('imagePreview')
   imagePreview!: Image;
 
@@ -20,13 +20,22 @@ export class ImageGeneratePreviewComponent {
   uploadStatus: string = "";
   uploadLogs: string[] = [];
 
+  isLoading = false;
+
   stopPolling$: Subject<void> = new Subject();
 
   constructor(private generateImageService: GenerateImageService,
     private messageService: MessageService,
     private cdRef: ChangeDetectorRef){}
 
+  ngOnInit(): void {
+    this.stopPolling$.subscribe(() => {
+      this.isLoading = false;
+    });
+  }
+
   generateImage(){
+    this.isLoading = true;
     this.generateImageService.generateImageFromPrompt(this.prompt).subscribe(res => {
       console.log(res);
       // this.previewImageSrc = res.output[0];
@@ -66,6 +75,10 @@ export class ImageGeneratePreviewComponent {
       }
       time++;
     });
+  }
+
+  saveImage() {
+
   }
 
   checkStatus(){

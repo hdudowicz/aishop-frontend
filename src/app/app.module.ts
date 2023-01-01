@@ -9,16 +9,21 @@ import {ButtonModule} from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import {TimelineModule} from 'primeng/timeline';
 import {InputTextModule} from 'primeng/inputtext';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {DataViewModule} from 'primeng/dataview';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ImageGeneratePreviewComponent } from './image-generate-preview/image-generate-preview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PredictionsListComponent } from './predictions-list/predictions-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImageGeneratePreviewComponent
+    ImageGeneratePreviewComponent,
+    PredictionsListComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToastModule,
     TimelineModule,
     InputTextModule,
+    ProgressBarModule,
+    DataViewModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

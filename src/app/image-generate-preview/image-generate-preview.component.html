@@ -1,3 +1,4 @@
+<p-progressBar mode="indeterminate" *ngIf="isLoading"></p-progressBar>
 <div class="card-container">
   <span class="p-float-label">
     <p-image [src]="previewImageSrc" alt="Image" width="500" [preview]="true" #imagePreview>
@@ -18,6 +19,9 @@
   <p-button label="Generate Image" icon="pi pi-check" class="p-button-text w-fit mx-auto" (click)="generateImage()"></p-button>
 
 </div>
+
+<p-button label="Save Image" icon="pi pi-check" class="p-button-text w-fit mx-auto" (click)="saveImage()"></p-button>
+
 
 <div class="card-container">
   <input pInputText type="text" [(ngModel)]="generatedId" placeholder="Prediction ID"/>
