@@ -3,5 +3,6 @@ export enum GenerationStatus {
   processing,
   succeeded,
   failed,
-  canceled
+  canceled,
+  unknown
 }

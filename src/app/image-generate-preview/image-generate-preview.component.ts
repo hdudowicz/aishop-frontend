@@ -1,9 +1,11 @@
+import { GenerationStatus } from './../../model/generation-status.model';
+import { Prediction } from './../../model/prediction.model';
 import { PredictionStatus } from 'src/model/prediction-status.model';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Image } from 'primeng/image';
 import { interval, Subject, switchMap, takeUntil, timer } from 'rxjs';
-import { GenerateImageService } from '../generate-image.service';
+import { GenerateImageService } from '../services/generate-image.service';
 
 @Component({
   selector: 'app-image-generate-preview',
@@ -17,7 +19,7 @@ export class ImageGeneratePreviewComponent implements OnInit {
   prompt: string = "";
   previewImageSrc = "https://wallpapertops.com/walldb/original/d/b/a/707646.jpg";
   generatedId: string = "";
-  uploadStatus: string = "";
+  uploadStatus: GenerationStatus = GenerationStatus.unknown;
   uploadLogs: string[] = [];
 
   isLoading = false;
@@ -44,24 +46,38 @@ export class ImageGeneratePreviewComponent implements OnInit {
     });
   }
 
-
-  private processStatus(res: PredictionStatus){
+  private processStatus(res: Prediction){
     console.log(res);
     if(res?.status){
       this.uploadStatus = res.status;
-      this.uploadLogs = res.logs?.split('\n') ?? []
 
-      if(res.output[0]){
-        this.previewImageSrc = res.output[0]
+      if(res.image){
+        this.previewImageSrc = 'data:image/png;base64,' + res.image
+        this.generatedId = res.id!!.toString();
         this.cdRef.detectChanges();
         this.stopPolling$.next();
       }
     }
 
-    if(res?.error){
-      this.messageService.add({severity: "error", summary: "Generation Error", sticky: true, detail: res?.error});
-    }
   }
+
+  // private processStatus(res: PredictionStatus){
+  //   console.log(res);
+  //   if(res?.status){
+  //     this.uploadStatus = res.status;
+  //     this.uploadLogs = res.logs?.split('\n') ?? []
+
+  //     if(res.output[0]){
+  //       this.previewImageSrc = res.output[0]
+  //       this.cdRef.detectChanges();
+  //       this.stopPolling$.next();
+  //     }
+  //   }
+
+  //   if(res?.error){
+  //     this.messageService.add({severity: "error", summary: "Generation Error", sticky: true, detail: res?.error});
+  //   }
+  // }
 
   private startPollingStatus(): void {
     let time = 0

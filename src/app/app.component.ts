@@ -1,4 +1,4 @@
-import { GenerateImageService } from './generate-image.service';
+import { GenerateImageService } from './services/generate-image.service';
 import { Component } from '@angular/core';
 
 @Component({

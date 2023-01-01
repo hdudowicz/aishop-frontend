@@ -1,3 +1,4 @@
+import { Prediction } from './../../model/prediction.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
@@ -23,8 +24,8 @@ export class GenerateImageService {
     return this.http.post<PredictionStatus>(`${this.serverUrl}/generate`, {text: prompt})
   }
 
-  getStatus(id: string): Observable<PredictionStatus> {
+  getStatus(id: string): Observable<Prediction> {
     var params = new HttpParams().set("id", id)
-    return this.http.get<PredictionStatus>(`${this.serverUrl}/status`, { params });
+    return this.http.get<Prediction>(`${this.serverUrl}/status`, { params });
   }
 }

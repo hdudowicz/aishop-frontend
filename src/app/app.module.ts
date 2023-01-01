@@ -11,6 +11,7 @@ import {TimelineModule} from 'primeng/timeline';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DataViewModule} from 'primeng/dataview';
+import {ToolbarModule} from 'primeng/toolbar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,12 +19,14 @@ import { AppComponent } from './app.component';
 import { ImageGeneratePreviewComponent } from './image-generate-preview/image-generate-preview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PredictionsListComponent } from './predictions-list/predictions-list.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImageGeneratePreviewComponent,
-    PredictionsListComponent
+    PredictionsListComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { PredictionsListComponent } from './predictions-list/predictions-list.co
     InputTextModule,
     ProgressBarModule,
     DataViewModule,
+    ToolbarModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

@@ -1,8 +1,44 @@
-<p-dataView [value]="predictions">
-  <ng-template let-pred pTemplate="listItem">
-      <div>
-          {{ pred.id }}
-          <p>Status: {{ pred.status }}</p>
-      </div>
-  </ng-template>
-</p-dataView>
+<p-button label="Start Polling" (click)="refresh()"></p-button>
+<div class="card">
+  <p-dataView #dv [value]="predictions" [paginator]="true" [rows]="9" filterBy="name"
+      [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+      <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+              <p-dropdown  [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0"></p-dropdown>
+              <span class="p-input-icon-left mb-2 md:mb-0">
+                  <i class="pi pi-search"></i>
+                  <!-- <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.)"> -->
+              </span>
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+      </ng-template>
+      <ng-template let-product pTemplate="listItem">
+          <div class="col-12">
+              <div class="product-list-item">
+                  <img [src]="'data:image/png;base64,' + product?.image" [alt]="product.name" width="300px"/>
+                  <div class="product-list-detail">
+                      <div class="product-name">{{product.id}}</div>
+                      <div class="product-description">{{product.status}}</div>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template let-product pTemplate="gridItem">
+          <div class="col-12 md:col-4">
+              <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                      <div>
+                          <span class="product-category">{{product.status}}</span>
+                      </div>
+                      <span [class]="'product-badge status-' + product?.status?.toLowerCase()">{{product?.status}}</span>
+                  </div>
+                  <div class="product-grid-item-content">
+                      <img [src]="'data:image/png;base64,' + product?.image" [alt]="product.name" width="300px"/>
+                      <div class="product-name">{{product?.status}}</div>
+                      <div class="product-description">{{product?.status}}</div>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-dataView>
+</div>
