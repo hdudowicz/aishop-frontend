@@ -40,14 +40,13 @@ export class ImageGeneratePreviewComponent implements OnInit {
     this.isLoading = true;
     this.generateImageService.generateImageFromPrompt(this.prompt).subscribe(res => {
       console.log(res);
-      // this.previewImageSrc = res.output[0];
-      // this.generatedId = res.id;
+      this.previewImageSrc = res.output[0];
+      this.generatedId = res.id;
       timer(1000).subscribe(() => this.startPollingStatus())
     });
   }
 
   private processStatus(res: Prediction){
-    console.log(res);
     if(res?.status){
       this.uploadStatus = res.status;
 
@@ -61,40 +60,30 @@ export class ImageGeneratePreviewComponent implements OnInit {
 
   }
 
-  // private processStatus(res: PredictionStatus){
-  //   console.log(res);
-  //   if(res?.status){
-  //     this.uploadStatus = res.status;
-  //     this.uploadLogs = res.logs?.split('\n') ?? []
-
-  //     if(res.output[0]){
-  //       this.previewImageSrc = res.output[0]
-  //       this.cdRef.detectChanges();
-  //       this.stopPolling$.next();
-  //     }
-  //   }
-
-  //   if(res?.error){
-  //     this.messageService.add({severity: "error", summary: "Generation Error", sticky: true, detail: res?.error});
-  //   }
-  // }
-
   private startPollingStatus(): void {
     let time = 0
     interval(1000).pipe(
       switchMap(() => this.generateImageService.getStatus(this.generatedId)),
       takeUntil(this.stopPolling$),
-    ).subscribe(res => {
-      this.processStatus(res);
-      if(time >= 5){
-        this.stopPolling$.next();
+    ).subscribe(
+    {
+      next: (res) => {
+        this.processStatus(res);
+        if(time >= 5){
+          this.stopPolling$.next();
+        }
+        time++;
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({severity: "error", summary: "Failed polling status", detail: JSON.stringify(err)});
       }
-      time++;
     });
   }
 
-  saveImage() {
-
+  printImage() {
+    // TODO: Implement
+    this.generateImageService.uploadImage()
   }
 
   checkStatus(){

@@ -1,9 +1,9 @@
 import { MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { forwardRef, NgModule } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea, InputTextareaModule } from 'primeng/inputtextarea';
 import { ImageModule } from 'primeng/image';
 import {ButtonModule} from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
@@ -44,7 +44,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     DataViewModule,
     ToolbarModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputTextarea),
+      multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
